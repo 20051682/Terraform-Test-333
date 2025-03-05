@@ -1,0 +1,21 @@
+---
+- name: Install and configure Docker on Amazon Linux
+  hosts: servers
+  become: yes
+  tasks:
+    - name: Install Docker on Amazon Linux
+      yum:
+        name: docker
+        state: present
+
+    - name: Start Docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Add current user to Docker group
+      user:
+        name: ec2-user
+        groups: docker
+        append: yes
