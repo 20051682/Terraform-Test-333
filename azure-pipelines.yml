@@ -33,7 +33,7 @@ stages:
 
     - task: SSH@0
       inputs:
-        sshEndpoint: 'EC2-SSH-Connection-222'  # Replace with your SSH service connection
+        sshEndpoint: 'EC2-SSH-Connection-333'  # Replace with your SSH service connection
         runOptions: 'inline'
         inline: |
           # Load Docker image from tar
