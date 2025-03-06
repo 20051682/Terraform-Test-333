@@ -1,0 +1,47 @@
+trigger:
+  branches:
+    include:
+      - main  # Trigger on push to main branch
+
+pool: 
+  name: 'Agent-Pool-333'  # Use your self-hosted EC2 agent pool
+
+variables:
+  MY_DOCKER_IMAGE: 'project-333'  # Your Docker image name
+  MY_DOCKER_TAG: 'latest'  # Docker tag, you can change if needed
+
+stages:
+- stage: Build
+  jobs:
+  - job: BuildDockerImage
+    steps:
+    - task: Docker@2
+      inputs:
+        command: 'build'
+        dockerfile: '/home/ec2-user/app/Dockerfile'  # Adjust path if needed
+        repository: $(MY_DOCKER_IMAGE)
+        tags: $(MY_DOCKER_TAG)
+
+    - script: |
+        docker save -o $(Pipeline.Workspace)/project-333.tar $(MY_DOCKER_IMAGE):$(MY_DOCKER_TAG)
+      displayName: 'Save Docker image to tar'
+
+- stage: Deploy
+  jobs:
+  - job: DeployToEC2
+    steps:
+
+    - task: SSH@0
+      inputs:
+        sshEndpoint: 'EC2-SSH-Connection-222'  # Replace with your SSH service connection
+        runOptions: 'inline'
+        inline: |
+          # Load Docker image from tar
+          docker load -i $(Pipeline.Workspace)/project-333.tar
+
+          # Stop and remove existing container if it exists
+          docker stop project-333-container || true
+          docker rm project-333-container || true
+
+          # Run the Docker container
+          docker run -d -p 8080:80 --name project-333-container $(MY_DOCKER_IMAGE):$(MY_DOCKER_TAG)
