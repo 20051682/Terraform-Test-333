@@ -38,7 +38,7 @@ jobs:
           chmod 600 aws_key_333
 
           # Sync the updated files from GitHub to EC2 instance
-          scp -i aws_key_333 -o StrictHostKeyChecking=no -r /Docker ec2-user@${{ secrets.EC2_HOST }}:/home/ec2-user/app/
+          scp -i aws_key_333 -o StrictHostKeyChecking=no -r ./Docker ec2-user@${{ secrets.EC2_HOST }}:/home/ec2-user/app/
 
           ssh -i aws_key_333 -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_HOST }} << 'EOF'
             # Ensure the latest code is pulled from GitHub and synced to EC2
