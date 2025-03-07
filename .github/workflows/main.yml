@@ -34,9 +34,9 @@ jobs:
 
     - name: Set up SSH connection and deploy to EC2
       run: |
-          echo "${{ secrets.EC2_PRIVATE_KEY }}" > aws_key_333
+          echo "${{ secrets.EC2_PRIVATE_KEY }}" | tr -d '\r' > aws_key_333
           chmod 600 aws_key_333
-          ssh -i aws_key_333 -o StrictHostKeyChecking=no ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} << 'EOF'
+          ssh -i aws_key_333 -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_HOST }} << 'EOF'
             docker stop project-333 || true
             docker rm project-333 || true
             docker run -d -p 80:80 --name project-333 ${{ secrets.DOCKER_USERNAME }}/app:project-333
