@@ -37,9 +37,9 @@ jobs:
           echo "${{ secrets.EC2_PRIVATE_KEY }}" > aws_key_333
           chmod 600 aws_key_333
           ssh -i aws_key_333 -o StrictHostKeyChecking=no ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} << 'EOF'
-            docker stop my-running-web-app || true
-            docker rm my-running-web-app || true
-            docker run -d -p 80:80 --name my-running-web-app ${{ secrets.DOCKER_USERNAME }}/app:my-web-app
+            docker stop project-333 || true
+            docker rm project-333 || true
+            docker run -d -p 80:80 --name project-333 ${{ secrets.DOCKER_USERNAME }}/app:my-web-app
           EOF
         
         
