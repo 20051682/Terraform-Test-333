@@ -44,4 +44,4 @@ stages:
           docker rm project-333-container || true
 
           # Run the Docker container
-          docker run -d -p 8080:80 --name project-333-container $(MY_DOCKER_IMAGE):$(MY_DOCKER_TAG)
+          docker run -d -p 9090:80 --name project-333-container $(MY_DOCKER_IMAGE):$(MY_DOCKER_TAG)
