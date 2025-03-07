@@ -21,7 +21,7 @@ jobs:
 
     - name: Build and push Docker image
       run: |
-        docker build -t ${{ secrets.DOCKER_USERNAME }}/app:project-333 Ansible/Docker_App_Ansible/
+        docker build -t ${{ secrets.DOCKER_USERNAME }}/app:project-333 Docker/
         docker push ${{ secrets.DOCKER_USERNAME }}/app:project-333
 
   deploy:
