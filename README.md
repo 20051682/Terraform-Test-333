@@ -53,13 +53,16 @@ Terraform-Test-333:.
 ```
 
 ##Terraform
+
 Terraform is an open-source infrastructure provisioning tool created by HashiCorp, it allows you to define and manage your infrastructure using a declarative language which is written in GO language.
 
 ##Prerequisites
+
 Create AWS Account and IAM user.
 Install Terrafom.
 
 ##Usage
+
 The automation step begins by creating VPC for network for EC2, and then Security group for filtering incoming and outgoing traffics. After that creating ssh key piar for further access. Finally, EC2 instance was created by using t2.micro with Amazon Linux OS in eu-west-1 (Ireland) region.
 
 Before initialize the project using terraform, have to generate ssh private key and public key. For that, below commad can be used:
